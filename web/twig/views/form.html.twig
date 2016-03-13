@@ -1,0 +1,27 @@
+{% extends layout %}
+
+{% block content %}
+
+
+    <form class="form-horizontal" action="/save" method="post">
+        <legend>{{"Edit / Add an HTTP Check"|trans}}</legend>
+        <div class="form-group">
+            <div class="col-sm-7 ">
+                <form action="#" method="post">
+                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        <label for="form_pass" class="col-lg-2 control-label">
+                            
+                        </label>
+                        <div class="col-lg-5">
+                            <input type="submit" name="submit" class="form-control btn btn-primary"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+

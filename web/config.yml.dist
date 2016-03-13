@@ -1,0 +1,5 @@
+db:
+    user: "%db.user%"
+    pass: "%db.pass%"
+    dbname: "%db.dbname%"
+    host: "localhost"

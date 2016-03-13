@@ -1,0 +1,74 @@
+{% extends layout %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            {%if httpcheckList | length %}
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>{{"Action"|trans}}</td>
+                            <td>{{"Server"|trans}}</td>
+                            <td>{{"IP"|trans}}</td>
+                            <td>{{"Domain"|trans}}</td>
+                            <td>{{"Status"|trans}}</td>
+                            <td>{{"Port"|trans}}</td>
+                            <td>{{"Uri"|trans}}</td>
+                            <td>{{"SSL"|trans}}</td>
+                            <td>{{"Regexp"|trans}}</td>
+                            <td>{{"Inv. RegEx"|trans}}</td>
+                            <td>{{"Auth"|trans}}</td>
+                            <td>{{"No Alert"|trans}}</td>
+                        </tr>
+                    </thead>
+                    {% for httpcheck in httpcheckList %}
+                        {%if httpcheck.login or httpcheck.pass %}
+                            {% set auth = httpcheck.login~" : "~pass %}
+                        {%else%}
+                            {% set auth = "" %}
+                        {%endif%}
+                        {% set url ="http"~(httpcheck.ssl?"s":"")~"://"~(auth?auth~"@":"")~httpcheck.host~":"~httpcheck.port~httpcheck.uri %}
+                        <tr>
+                            <td>
+                                <div class=btn-group >
+                                    <a class='btn btn-sm btn-default' href="{{url}}" target="_blank" title="{{"View"|trans}}">
+                                        <span class="glyphicon glyphicon-eye-open" data-unicode="2212"></span>
+                                    </a>
+                                    <a class='btn btn-sm btn-success' href="/copy/{{httpcheck.id}}" title="{{"Copy"|trans}}">
+                                        <span class="glyphicon glyphicon-duplicate" data-unicode="2212"></span>
+                                    </a>
+                                    <a class='btn btn-sm btn-warning' href="/edit/{{httpcheck.id}}" title="{{"Edit"|trans}}">
+                                        <span class="glyphicon glyphicon-pencil" data-unicode="2212"></span>
+                                    </a>
+                                    <a class='btn btn-sm btn-danger' href="/delete/{{httpcheck.id}}" title="{{"Delete"|trans}}">
+                                        <span class="glyphicon glyphicon-trash" data-unicode="2212"></span>                                    
+                                    </a>
+                                </div>
+                            </td>
+                            <td>{{httpcheck.fqdn}}</td>
+                            <td>{{httpcheck.ip}}</td>
+                            <td>{{httpcheck.host}}</td>
+                            <td>{{httpcheck.status}}</td>
+                            <td>{{httpcheck.port}}</td>
+                            <td>{{httpcheck.uri}}</td>
+                            <td>{{httpcheck.ssl}}</td>
+                            <td>{{httpcheck.regexp}}</td>
+                            <td>{{httpcheck.invert_regexp}}</td>
+                            <td>
+                                {%if httpcheck.login or httpcheck.pass %}
+                                    {{httpcheck.login~" : "~pass}}
+                                {%endif%}
+                            </td>
+                            <td>{{httpcheck.no_alert}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            {%else%}
+                <p class="alert alert-info">{{"No check in database"|trans}}</p>
+            {%endif%}
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,21 @@
+nagios_httpcheck:
+    -
+        id: 1
+        fqdn: www.example.com
+        ip: 127.0.0.1
+        host: www.example.com
+        uri: /
+        port: 80
+        ssl: 0
+        status: 200
+        regexp: 
+        invert_regexp: 0
+        no_alert: 1
+        login: 
+        pass: 
+        created_at: "2016-01-01 12:00:00"
+        updated_at: "2016-01-01 12:00:00"
+nagios_httpcheck_service:
+    -
+        httpcheck_id: 1
+        command_line: "\ndefine service {\n    check_command                  check_http_status!127.0.0.1!www.example.com!80!/!200\n    host_name                      www.example.com\n    service_description            Check http status\n    use                            generic-service\n}\n        \n"

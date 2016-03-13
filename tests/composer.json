@@ -1,0 +1,11 @@
+{
+    "require": {
+        "phpunit/dbunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Octopuce\\Nagios\\Httpcheck\\": "../src/Octopuce/Nagios/Httpcheck",
+            "Octopuce\\Test\\Nagios\\Httpcheck\\": "src/Octopuce/Test/Nagios/Httpcheck"
+        }
+    }
+}

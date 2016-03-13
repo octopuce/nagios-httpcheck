@@ -1,0 +1,19 @@
+{
+    "require": {
+        "silex/silex": "^1.3",
+        "symfony/yaml": "*",
+        "symfony/form" : "*",
+        "symfony/validator" : "*",
+        "symfony/config" : "*",
+        "symfony/translation" : "^2.8",
+        "symfony/security-csrf" : "*",
+        "twig/twig": "^1.23",
+        "symfony/twig-bridge": "^2.8"
+        
+    },
+    "autoload": {
+        "psr-4": {
+            "Octopuce\\Nagios\\Httpcheck\\": "../src/Octopuce/Nagios/Httpcheck"
+        }
+    }
+}

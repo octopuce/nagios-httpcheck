@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Nagios HTTPCHECK</title>
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css">
+        <script type="text/javascript" src="/jquery/jquery.js"></script>
+        <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <style>
+            body {
+                background: #222;
+            }
+            .container {
+                background: rgba(0,0,0,0.6);
+                color: #fff;
+                min-height: 220px;
+                max-height: 720px;
+                overflow: auto;
+            }
+            .required {
+                color: #fff;
+            }            
+            .required.control-label {
+                color: #fff;
+            }
+            .control-label {
+                color: #ccc;
+            }
+            label {
+                color: #ccc;
+            }
+            thead td {
+                font-weight: bold;
+            }
+            legend{
+                color: #fff;
+            }
+        </style>
+        <script>
+            $(function () {
+                /**
+                 * Form CSS Switcher for empty :required inputs
+                 * @returns void
+                 */
+                function checkIsEmpty(itemList) {
+                    if (!$.isArray(itemList)) {
+                        itemList = [itemList];
+                    }
+                    $.each(itemList, function (k, item) {
+                        if (!$(item).val()) {
+                            $(item).css("border", "1px solid red");
+                        } else {
+                            $(item).css("bord(r", "none");
+                        }
+                    })
+                }
+                // It should check inputs by default
+                checkIsEmpty($("input:required"))
+
+                // It should monitor required inputs
+                $("input:required").on("keyup", function (e) {
+                    checkIsEmpty(this);
+                })
+
+                /**
+                 * Lazy splash body background loader
+                 * @returns void
+                 */
+                function GetRandomBackground()
+                {
+
+                    var url = 'http://blog.instagram.com/tagged/photo_feature/rss';
+
+                    $.ajax({
+                        url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
+                        async: false,
+                        jsonpCallback: 'jsonCallback',
+                        contentType: "application/json",
+                        dataType: 'jsonp',
+                        success: function (json) {
+
+                            var min = 0;
+                            var max = json.responseData.feed.entries.length;
+                            // and the formula is:
+                            var random = Math.floor(Math.random() * (max)) + min;
+                            var str = json.responseData.feed.entries[random].content;
+
+                            var regex = /<img.*?src="(.*?)"/;
+                            var src = regex.exec(str)[1];
+                            $('body').css('background-image', 'url(' + src + ')');
+                            $('body').css('background-size', 'cover');
+
+                        }
+                    });
+
+                }
+                // It should load a splash background
+                GetRandomBackground();
+
+                // It should focus on sensible element
+                if ($("#form_fqdn")) {
+                    setTimeout(function () {
+                        $("#form_fqdn").focus();
+                    }, 300)
+                }
+
+            })
+
+        </script>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Nagios httpcheck</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/index">List</a></li>
+                        <li><a href="/add"> Add</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nagios <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/all"> View All Checks </a></li>
+                                <li><a href="/alert"> View Critical Checks </a></li>
+                            </ul>
+                        </li>                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container">
+            {%if errorList|length > 0%}
+                {% for error in errorList %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="alert alert-danger">
+                                {{ error }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {%endif%}           
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
