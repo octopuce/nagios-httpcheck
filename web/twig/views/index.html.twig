@@ -24,7 +24,7 @@
                     </thead>
                     {% for httpcheck in httpcheckList %}
                         {%if httpcheck.login or httpcheck.pass %}
-                            {% set auth = httpcheck.login~" : "~pass %}
+                            {% set auth = httpcheck.login~":"~httpcheck.pass %}
                         {%else%}
                             {% set auth = "" %}
                         {%endif%}
@@ -55,11 +55,7 @@
                             <td>{{httpcheck.ssl}}</td>
                             <td>{{httpcheck.regexp}}</td>
                             <td>{{httpcheck.invert_regexp}}</td>
-                            <td>
-                                {%if httpcheck.login or httpcheck.pass %}
-                                    {{httpcheck.login~" : "~pass}}
-                                {%endif%}
-                            </td>
+                            <td> {{auth}}</td>
                             <td>{{httpcheck.no_alert}}</td>
                         </tr>
                     {% endfor %}
