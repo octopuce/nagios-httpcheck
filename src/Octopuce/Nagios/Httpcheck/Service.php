@@ -203,7 +203,7 @@ define service {
             $result["params"][] = "${login}:${pass}";
         }
         $result["name"] = $command_name;
-        $result["description"] = ucfirst(str_replace("_", " ", $command_name));
+        $result["description"] = ucwords(str_replace("_", " ", $command_name))." ".$check["host"]."@".$check["ip"]." #".$check["id"];
 
         return $result;
     }
