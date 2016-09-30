@@ -64,6 +64,8 @@
                     checkIsEmpty(this);
                 })
 
+		$('body').css('background-image', 'url({{image}})');
+		$('body').css('background-size', 'cover');
                 /**
                  * Lazy splash body background loader
                  * @returns void
@@ -72,7 +74,6 @@
                 {
 
                     var url = 'http://blog.instagram.com/tagged/photo_feature/rss';
-
                     $.ajax({
                         url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
                         async: false,
@@ -97,7 +98,7 @@
 
                 }
                 // It should load a splash background
-                GetRandomBackground();
+                // GetRandomBackground();
 
                 // It should focus on sensible element
                 if ($("#form_fqdn")) {

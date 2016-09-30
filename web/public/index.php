@@ -11,8 +11,17 @@ try {
     
     define("APP_PATH", realpath(__DIR__ . "/../"));
     
+    require_once APP_PATH."/flickr.php";
     require_once APP_PATH."/bootstrap.php";
-    
+
+// It should bootstrap the flickr provider
+    $feeder = new FlickrImages();
+    $imageList = $feeder->getImageList();
+    $rand = rand( 0, count($imageList) - 1 );
+    $image = $imageList[$rand];
+    if( ! $image ){
+	$image = $imageList[0];
+    }
 // It should bootstrap the Silex app 
     $app = new Silex\Application();
 
@@ -23,8 +32,8 @@ try {
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'twig.path' => APP_PATH . '/twig/views',
     ));
-    $app->before(function () use ($app) {
-        $app['twig']->addGlobal('layout', null);
+    $app->before(function () use ($app, $image) {
+        $app['twig']->addGlobal('image',"$image");// json_encode($imageList));
         $app['twig']->addGlobal('layout', $app['twig']->loadTemplate('layout.html.twig'));
     });
 
@@ -45,11 +54,13 @@ try {
     $form = $app['form.factory']->createBuilder('form')
             ->add("id", "hidden", array(
             ))
-            ->add("fqdn", "text", array(
+            ->add("fqdn", "choice", array(
                 'constraints' => array(new Assert\NotNull),
-                "label" => "FQDN"
+                "label" => "FQDN",
+		"choices" => $config["hosts"]
             ))
             ->add("ip", "text", array(
+                "required" => false,
                 'constraints' => array(new Assert\Ip(array("version" => Assert\Ip::ALL)))
             ))
             ->add("host", "text", array(
