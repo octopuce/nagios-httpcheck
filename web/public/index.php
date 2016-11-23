@@ -1,5 +1,4 @@
 <?php
-
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\Request;
