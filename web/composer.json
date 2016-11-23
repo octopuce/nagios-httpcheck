@@ -2,7 +2,7 @@
     "require": {
         "silex/silex": "^1.3",
         "symfony/yaml": "*",
-        "symfony/form" : "*",
+        "symfony/form" : "~2.3",
         "symfony/validator" : "*",
         "symfony/config" : "*",
         "symfony/translation" : "^2.8",

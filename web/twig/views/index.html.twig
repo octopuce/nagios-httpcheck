@@ -9,6 +9,7 @@
                     <thead>
                         <tr>
                             <td>{{"Action"|trans}}</td>
+                            <td>{{"Id"|trans}}</td>
                             <td>{{"Server"|trans}}</td>
                             <td>{{"IP"|trans}}</td>
                             <td>{{"Domain"|trans}}</td>
@@ -16,10 +17,13 @@
                             <td>{{"Port"|trans}}</td>
                             <td>{{"Uri"|trans}}</td>
                             <td>{{"SSL"|trans}}</td>
+                            <td>{{"Auth"|trans}}</td>
+			    <!--
                             <td>{{"Regexp"|trans}}</td>
                             <td>{{"Inv. RegEx"|trans}}</td>
+			    -->
                             <td>{{"Auth"|trans}}</td>
-                            <td>{{"No Alert"|trans}}</td>
+                            <td>{{"Crit."|trans}}</td>
                         </tr>
                     </thead>
                     {% for httpcheck in httpcheckList %}
@@ -46,17 +50,21 @@
                                     </a>
                                 </div>
                             </td>
+                            <td>{{httpcheck.id}}</td>
                             <td>{{httpcheck.fqdn}}</td>
                             <td>{{httpcheck.ip}}</td>
                             <td>{{httpcheck.host}}</td>
                             <td>{{httpcheck.status}}</td>
                             <td>{{httpcheck.port}}</td>
-                            <td>{{httpcheck.uri}}</td>
+                            <td class="cell-uri">{{httpcheck.uri}}</td>
                             <td>{{httpcheck.ssl}}</td>
+                            <td class="cell-auth">{{ (httpcheck.ssl) ? "Yes":"No" | trans}}</td>
+			    <!--
                             <td>{{httpcheck.regexp}}</td>
                             <td>{{httpcheck.invert_regexp}}</td>
-                            <td> {{auth}}</td>
-                            <td>{{httpcheck.no_alert}}</td>
+			    -->
+                            <td class="cell-auth">{{ (auth) ? "Yes":"No" | trans}}</td>
+                            <td class="cell-critical">{{httpcheck.no_alert ? "No":"Yes"|trans}}</td>
                         </tr>
                     {% endfor %}
                 </table>
