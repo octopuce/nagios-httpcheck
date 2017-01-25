@@ -2,7 +2,7 @@
 class FlickrImages {
 
 
-    protected $flickr = "https://api.flickr.com/services/feeds/photos_public.gne?tags=landscape,beautiful&tagmode=any";
+    protected $flickr = "https://api.flickr.com/services/feeds/photos_public.gne?tags=landscape&tagmode=any";
     protected $archive = "/tmp/flicker.xml";
 
 
