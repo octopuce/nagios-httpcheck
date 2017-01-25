@@ -3,3 +3,4 @@ vendor/
 composer.lock
 
 config.yml
+web/auth.php

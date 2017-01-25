@@ -7,11 +7,15 @@ use Octopuce\Nagios\Httpcheck\DefaultDataAccessor;
 use Octopuce\Nagios\Httpcheck\Service as HttpcheckService;
 
 try {
-    
+   
+
     define("APP_PATH", realpath(__DIR__ . "/../"));
     
     require_once APP_PATH."/flickr.php";
     require_once APP_PATH."/bootstrap.php";
+    if( is_file( APP_PATH."/auth.php" ) ) { 
+	require_once APP_PATH."/auth.php";
+    }
 
 // It should bootstrap the flickr provider
     $feeder = new FlickrImages();
@@ -238,6 +242,15 @@ try {
                     'form' => $form->createView()
         ));
     });
+
+// It should have a GET route for setting a cookie 
+    $app->get('/cookie.js', function () use ($app, $nagiosHttpcheckService) {
+	$browser = $_SERVER['HTTP_USER_AGENT'];
+	$ip = $_SERVER["IP_ADDR"];
+	setcookie("httpcheck","ok");
+        return "(function(){cookie=true;})()"; 
+    });
+
 
 // It should have a GET route for deleting checks  
     $app->get('/delete/{id}', function ($id) use ($app, $nagiosHttpcheckService) {
