@@ -4,3 +4,4 @@ composer.lock
 
 config.yml
 web/auth.php
+web/twig/views/menu-items.html.twig
